@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class MovimientoNPC : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class MovimientoNPC : MonoBehaviour
     
     public Transform jugador;
 
+    public Animator animator;
+
     public float velocidad = 2F;
 
     public float minRotationTime = 20f;
@@ -17,9 +20,12 @@ public class MovimientoNPC : MonoBehaviour
     public float rotationSpeed = 3f;
 
     bool estarAlerta;
-    void Start()
-    {
 
+    NavMeshAgent _navAgent;
+
+    void Awake()
+    {
+        _navAgent = GetComponent<NavMeshAgent>();
     }
    
     void Update()
@@ -30,11 +36,11 @@ public class MovimientoNPC : MonoBehaviour
 
         if (estarAlerta != true)
         {
-            //transform.LookAt(jugador);
             Vector3 posJugador = new Vector3(jugador.position.x, transform.position.y, jugador.position.z);
             transform.LookAt(posJugador);
             transform.position = Vector3.MoveTowards(transform.position, posJugador, velocidad * Time.deltaTime);
-        }
+            
+        } 
     }
 
     void OnDrawGizmos()

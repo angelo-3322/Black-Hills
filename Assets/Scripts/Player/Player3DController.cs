@@ -23,14 +23,21 @@ public class Player3DController : MonoBehaviour
 
     CharacterController characterController;
     Transform cameraTransform;
-    public AudioSource Respiracion;
 
+
+    public AudioSource Respiracion;
+    private Animator modelAnimator;
 
     float verticalRotation = 0.0f;
     float verticalVelocity = 0.0f;
 
+
     bool isJumping = false;
 
+    void Start()
+    {
+       modelAnimator = GetComponentInChildren<Animator>();
+    }
 
     void Awake()
     {
@@ -46,7 +53,6 @@ public class Player3DController : MonoBehaviour
         HandleMovement();
         HandleRotation();
         HandleJump();
-
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -66,6 +72,12 @@ public class Player3DController : MonoBehaviour
 
         float moveX = Input.GetAxis("Horizontal");
         float moveZ = Input.GetAxis("Vertical");
+
+        bool isWalking = Mathf.Abs(moveX) > 0.1f || Mathf.Abs(moveZ) > 0.1f;
+        bool isRunning = Input.GetKey(KeyCode.LeftShift) && isWalking;
+
+        modelAnimator.SetBool("isWalk", isWalking);
+        modelAnimator.SetBool("isRunning", isRunning);
 
         Vector3 moveDirection = (transform.right * moveX + transform.forward * moveZ).normalized;
         Vector3 movement = moveDirection * moveSpeed;
