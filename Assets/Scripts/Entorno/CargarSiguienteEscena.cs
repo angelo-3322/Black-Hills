@@ -6,16 +6,28 @@ using UnityEngine.SceneManagement;
 public class CargarSiguienteEscena : MonoBehaviour
 {
     [SerializeField]
-    private string etiquetaObjeto = "Player";
-
-    [SerializeField]
     private string nombreEscenaSiguiente;
 
-    private void OnTriggerEnter(Collider other)
+    void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag(etiquetaObjeto))
+        if (other.CompareTag("Player"))
         {
-            SceneManager.LoadScene(nombreEscenaSiguiente);
+            StartCoroutine(EndScene());
         }
     }
+
+    IEnumerator EndScene()
+    {
+        GameObject fadeObject = GameObject.Find("Panel");
+
+        Fade controller = fadeObject.GetComponent<Fade>();
+
+        controller.FadeOut();
+
+        yield return new WaitForSeconds(5f);
+
+        SceneManager.LoadScene(nombreEscenaSiguiente);
+    }
+
+
 }

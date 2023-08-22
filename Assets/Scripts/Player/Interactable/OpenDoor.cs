@@ -1,4 +1,3 @@
-using Assets.Scripts;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -27,9 +26,5 @@ public class OpenDoor : Interactable
         SceneManager.LoadScene(Escena);
 
         yield return null;
-        if (PlayerData.spawnPoint != null && PlayerData.player != null)
-        {
-            PlayerData.player.transform.position = PlayerData.spawnPoint.position;
-        }
     }
 }
