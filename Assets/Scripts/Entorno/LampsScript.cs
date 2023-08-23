@@ -10,6 +10,7 @@ public class LampsScript : MonoBehaviour
 
     private bool isBlinking = false;
 
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player") && !isBlinking)
@@ -46,7 +47,6 @@ public class LampsScript : MonoBehaviour
         foreach (GameObject lamp in lamps)
         {
             Destroy(lamp);
-            
         }
 
         foreach (GameObject npc in npcs)
