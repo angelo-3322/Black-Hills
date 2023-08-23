@@ -3230,6 +3230,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   velMov: 1.2
   velRot: 1
+  damage: 30
   target: {fileID: 0}
   audioSusto: {fileID: 7086787394867313073, guid: 19ab36070e364d747a9a0e809385fca7,
     type: 3}

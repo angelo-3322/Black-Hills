@@ -11,6 +11,8 @@ public class MovimientoWitch : MonoBehaviour
     [SerializeField]
     float velRot;
 
+    [SerializeField]
+    float damage = 30.0F;
 
     public Transform target;
 
@@ -34,10 +36,11 @@ public class MovimientoWitch : MonoBehaviour
     bool hacerScream;
     bool audioPlayed = false;
     bool audioAmbience = false;
+    bool _isAttacked = false;
 
-    public AudioSource terrenoAudioSource;
-    public float volumenAlerta = 0.03f;
-    private float volumenOriginal;
+    public AudioSource terrenoAudioSource; //Quitar en Cabaña
+    public float volumenAlerta = 0.03f; //Quitar en Cabaña
+    private float volumenOriginal; //Quitar en Cabaña
 
     private AudioSource audioAmbienteSource;
 
@@ -131,8 +134,19 @@ public class MovimientoWitch : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Shield") || other.CompareTag("Player"))
+        if (other.CompareTag("Shield"))
         {
+            if (audioAmbienteSource != null)
+            {
+                audioAmbienteSource.Stop();
+            }
+            terrenoAudioSource.volume = volumenOriginal;
+            Destroy(gameObject);
+        }
+
+        if (other.CompareTag("Player") && !_isAttacked)
+        {
+            _isAttacked = true;
             if (audioAmbienteSource != null)
             {
                 audioAmbienteSource.Stop();
@@ -140,6 +154,12 @@ public class MovimientoWitch : MonoBehaviour
 
             terrenoAudioSource.volume = volumenOriginal;
             Destroy(gameObject);
+
+            Player3DController playerController = other.GetComponent<Player3DController>();
+            if (playerController != null)
+            {
+                playerController.TakeDamage(damage);
+            }
         }
     }
 

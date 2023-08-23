@@ -5,33 +5,37 @@ using UnityEngine;
 public class TomarPastilla : Interactable
 {
     public GameObject Pills;
-    public Player3DController _controller;
-
+    
     [SerializeField]
-    float _powerup = 25.0F;
+    float _medicine = 25.0F;
 
 
-    void Awake()
-    {
-        _controller = GetComponent<Player3DController>();
-    }
-
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            Player3DController controller = other.GetComponent<Player3DController>();
-            controller.TakeHealth(_powerup);
-        }
-
-    }
 
     public override void Interact()
     {
-        //base.Interact();
+        base.Interact();
 
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
 
-        Destroy(Pills);
+        if (player != null)
+        {
+            Player3DController playerController = player.GetComponent<Player3DController>();
+
+            if (playerController != null)
+            {
+                playerController.TakeHealth(_medicine);
+
+                Destroy(Pills);
+            }
+            else
+            {
+                Debug.LogWarning("No se encontró el componente PlayerController en el objeto del jugador.");
+            }
+        }
+        else
+        {
+            Debug.LogWarning("No se encontró un objeto con la etiqueta 'Player'.");
+        }
     }
-    
+
 }

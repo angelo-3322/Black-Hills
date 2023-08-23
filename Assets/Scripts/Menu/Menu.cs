@@ -14,4 +14,5 @@ public class Menu : MonoBehaviour
         Application.Quit();
         Debug.Log("aqui se cierra el juego");
     }
+
 }

@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class Player3DController : MonoBehaviour
 {
@@ -42,10 +43,11 @@ public class Player3DController : MonoBehaviour
 
 
     bool isJumping = false;
+    bool isDead = false;
 
     void Start()
     {
-       modelAnimator = GetComponentInChildren<Animator>();
+        modelAnimator = GetComponentInChildren<Animator>();
     }
 
     void Awake()
@@ -56,7 +58,7 @@ public class Player3DController : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
-        healthbar.maxValue = 100.0F;
+        healthbar.maxValue = health;
         healthbar.value = health;
     }
 
@@ -133,39 +135,72 @@ public class Player3DController : MonoBehaviour
     {
         if (other.CompareTag("WitchStanding"))
         {
-                AudioSource audioSource1 = Instantiate(Respiracion, transform.position, Quaternion.identity);
-                audioSource1.Play();
-                Destroy(audioSource1.gameObject, 7F);
+            AudioSource audioSource1 = Instantiate(Respiracion, transform.position, Quaternion.identity);
+            audioSource1.Play();
+            Destroy(audioSource1.gameObject, 7F);
         }
     }
     public void TakeDamage(float damage)
     {
-        health -= Mathf.Abs(damage);
-        if (health >= 0)
+        if (!isDead)
         {
+            health -= Mathf.Abs(damage);
             healthbar.value = health;
+
+            if (health <= 0)
+            {
+                isDead = true;
+                StartCoroutine(ProcesoDeMuerte());
+            }
         }
-
-        if (health <= 0)
-        {
-            //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        }
-
-
     }
 
     public void TakeHealth(float powerup)
     {
         health += Mathf.Abs(powerup);
-        if (health >= 100)
-        {
-            healthbar.value = health;
-        }
-        else
+
+        if (health > 100)
         {
             health = 100;
-            healthbar.value = 100;
         }
+
+        healthbar.value = health;
     }
 
+    IEnumerator ProcesoDeMuerte()
+    {
+        isDead = true;
+        BloquearVistaCamaraHaciaAdelante();
+        modelAnimator.SetTrigger("_isDead");
+
+        yield return new WaitForSeconds(5.0f);
+
+        GameObject fadeObject = GameObject.Find("Panel");
+
+        Fade controller = fadeObject.GetComponent<Fade>();
+
+        controller.FadeOut();
+
+        yield return new WaitForSeconds(2.0f);
+
+        GameObject texto = GameObject.Find("MessageGameOver");
+
+        AparecerTexto textoController = texto.GetComponent<AparecerTexto>();
+
+        textoController.Aparecer();
+
+        yield return new WaitForSeconds(4f);
+
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    void BloquearVistaCamaraHaciaAdelante()
+    {
+        mouseSensitivity = 0.0f;
+
+        cameraTransform.localRotation = Quaternion.Euler(0.0f, 90.0f, 0.0f);
+
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = false;
+    }
 }
