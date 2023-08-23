@@ -1,5 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Player3DController : MonoBehaviour
 {
@@ -20,6 +22,13 @@ public class Player3DController : MonoBehaviour
 
     [SerializeField]
     float gravityMultiplier = 2.0f;
+
+    [Header("Health")]
+    [SerializeField]
+    float health = 100.0F;
+
+    [SerializeField]
+    Slider healthbar;
 
     CharacterController characterController;
     Transform cameraTransform;
@@ -46,6 +55,9 @@ public class Player3DController : MonoBehaviour
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
+        healthbar.maxValue = 100.0F;
+        healthbar.value = health;
     }
 
     void Update()
@@ -124,6 +136,35 @@ public class Player3DController : MonoBehaviour
                 AudioSource audioSource1 = Instantiate(Respiracion, transform.position, Quaternion.identity);
                 audioSource1.Play();
                 Destroy(audioSource1.gameObject, 7F);
+        }
+    }
+    public void TakeDamage(float damage)
+    {
+        health -= Mathf.Abs(damage);
+        if (health >= 0)
+        {
+            healthbar.value = health;
+        }
+
+        if (health <= 0)
+        {
+            //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
+
+
+    }
+
+    public void TakeHealth(float powerup)
+    {
+        health += Mathf.Abs(powerup);
+        if (health >= 100)
+        {
+            healthbar.value = health;
+        }
+        else
+        {
+            health = 100;
+            healthbar.value = 100;
         }
     }
 
