@@ -10,9 +10,10 @@ public class ConversationTrigger : MonoBehaviour
     private TextMeshProUGUI dialogoTextMeshPro;
 
     [SerializeField]
-    private AudioSource audioSource;
+    AudioSource audioSource;
 
-    private GameObject barra;
+    [SerializeField]
+    GameObject barra;
 
     [SerializeField]
     private string nombre;

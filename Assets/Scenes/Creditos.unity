@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -409,7 +409,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2084449685
 RectTransform:
   m_ObjectHideFlags: 0
@@ -774,7 +774,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Hecho por  \n\nEmmanuel Brenes \nAngelo Sanchez\n"
+  m_text: "Juego hecho por:\n\nEmmanuel Brenes \nAngelo Sanchez\n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 64ab0965734a76640a8ddb33a456f2a5, type: 2}
   m_sharedMaterial: {fileID: 8211626892519713444, guid: 64ab0965734a76640a8ddb33a456f2a5,
