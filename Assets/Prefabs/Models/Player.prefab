@@ -531,7 +531,7 @@ MonoBehaviour:
   mouseSensitivity: 8
   jumpForce: 6
   gravityMultiplier: 2
-  health: 25
+  health: 100
   healthbar: {fileID: 0}
   Respiracion: {fileID: 6835099397762516669, guid: efbc0332f0c2bb94d9298680b6334f7f,
     type: 3}

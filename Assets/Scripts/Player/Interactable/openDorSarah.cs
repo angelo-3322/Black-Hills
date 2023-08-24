@@ -2,15 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class puertaSotano : Interactable
+public class openDorSarah : Interactable
 {
-    public GameObject puerta;
+    [SerializeField]
+     GameObject puerta;
 
-    public float velocidadRotacion;
+    [SerializeField]
+     float velocidadRotacion;
+
+    [SerializeField]
+    GameObject personaje;
 
     public override void Interact()
     {
         base.Interact();
+        MovimientoNPC npc = personaje.GetComponent<MovimientoNPC>();
 
         if (puerta != null)
         {
@@ -21,10 +27,11 @@ public class puertaSotano : Interactable
             Quaternion nuevaRotacion = Quaternion.Euler(rotacionActual.eulerAngles.x, nuevaRotacionY, rotacionActual.eulerAngles.z);
 
             puerta.transform.rotation = nuevaRotacion;
+            npc.enabled = true;
 
-            if (nuevaRotacionY >= 90.0f)
+            if (nuevaRotacionY >= -90.0f)
             {
-                puerta.transform.rotation = Quaternion.Euler(rotacionActual.eulerAngles.x, 90.0f, rotacionActual.eulerAngles.z);
+                puerta.transform.rotation = Quaternion.Euler(rotacionActual.eulerAngles.x, -90.0f, rotacionActual.eulerAngles.z);
                 enabled = false;
             }
         }

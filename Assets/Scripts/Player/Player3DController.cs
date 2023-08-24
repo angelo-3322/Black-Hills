@@ -38,11 +38,13 @@ public class Player3DController : MonoBehaviour
     public AudioSource Respiracion;
     private Animator modelAnimator;
 
+    [SerializeField]
     float verticalRotation = 0.0f;
+    [SerializeField]
     float verticalVelocity = 0.0f;
 
 
-    bool isJumping = false;
+    bool isScared = false;
     bool isDead = false;
 
     void Start()
@@ -120,12 +122,10 @@ public class Player3DController : MonoBehaviour
         {
             if (Input.GetButtonDown("Jump"))
             {
-                isJumping = true;
                 verticalVelocity = jumpForce;
             }
             else
             {
-                isJumping = false;
                 verticalVelocity = 0.0f;
             }
         }
@@ -133,8 +133,9 @@ public class Player3DController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("WitchStanding"))
+        if (other.CompareTag("WitchStanding") && !isScared)
         {
+            isScared = true;
             AudioSource audioSource1 = Instantiate(Respiracion, transform.position, Quaternion.identity);
             audioSource1.Play();
             Destroy(audioSource1.gameObject, 7F);

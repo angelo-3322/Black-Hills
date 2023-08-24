@@ -2,15 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class puertaSotano : Interactable
+public class openDorKali : Interactable
 {
-    public GameObject puerta;
+    [SerializeField]
+     GameObject puerta;
+    [SerializeField]
+     float velocidadRotacion;
 
-    public float velocidadRotacion;
+    [SerializeField]
+    GameObject personaje;
 
     public override void Interact()
     {
         base.Interact();
+        MovimientoNPC npc = personaje.GetComponent<MovimientoNPC>();
 
         if (puerta != null)
         {
@@ -22,9 +27,11 @@ public class puertaSotano : Interactable
 
             puerta.transform.rotation = nuevaRotacion;
 
-            if (nuevaRotacionY >= 90.0f)
+            npc.enabled = true;
+
+            if (nuevaRotacionY >= 0.0f)
             {
-                puerta.transform.rotation = Quaternion.Euler(rotacionActual.eulerAngles.x, 90.0f, rotacionActual.eulerAngles.z);
+                puerta.transform.rotation = Quaternion.Euler(rotacionActual.eulerAngles.x, 0.0f, rotacionActual.eulerAngles.z);
                 enabled = false;
             }
         }
